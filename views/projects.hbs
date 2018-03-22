@@ -1,0 +1,35 @@
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+        <div class="card card-plain">
+            <div class="card-header" data-background-color="blue">
+                <h4 class="title">Current Projects</h4>
+                <p class="category">Here is a list af all the currently enlisted projects</p>
+            </div>
+            <div class="card-content table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <th>Project Name</th>
+                        <th>Project Lead</th>
+                        <th>Ford Funded</th>
+                    </thead>
+                    <tbody id="table_body">
+                        {{#each data}}
+
+                            <tr onclick="getProject('{{id}}')">
+                                <td>{{project.projectName}}</td>
+                                <td>{{fullName}}</td>
+                                <td>{{applicationStatus}}</td>
+                            </tr>
+                    
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+</div>

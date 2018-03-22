@@ -1,0 +1,235 @@
+    <div class="wrapper">
+        <div class="sidebar" data-color="blue" data-image="/images/sidebar-1.jpg">
+            <!--
+        Tip 1: You can change the color of the sidebar using: data-color="blue | blue | green | orange | red"
+
+        Tip 2: you can also add an image using data-image tag
+    -->
+            <div class="logo">
+                <a href="#" class="simple-text">
+                    {{project.project.projectName}}
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                <ul class="nav">
+                    <li class="active">
+                        <a href="/home/{{project.id}}">
+                            <i class="material-icons">dashboard</i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/info/{{project.id}}">
+                            <i class="material-icons">person</i>
+                            <p>User Profile</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+            <div class="main-panel">
+                <nav class="navbar navbar-transparent navbar-absolute">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="#">Dashboard </a>
+                        </div>
+                        <div class="collapse navbar-collapse">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="material-icons">dashboard</i>
+                                        <p class="hidden-lg hidden-md">Dashboard</p>
+                                    </a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="material-icons">notifications</i>
+                                        <span class="notification">5</span>
+                                        <p class="hidden-lg hidden-md">Notifications</p>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="#">Mike John responded to your email</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">You have 5 new tasks</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">You're now friend with Andrew</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Another Notification</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Another One</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="material-icons">person</i>
+                                        <p class="hidden-lg hidden-md">Profile</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <form class="navbar-form navbar-right" role="search">
+                                <div class="form-group  is-empty">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                    <span class="material-input"></span>
+                                </div>
+                                <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                                    <i class="material-icons">search</i>
+                                    <div class="ripple-container"></div>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </nav>
+                <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="card card-stats">
+                                <div class="card-header" data-background-color="green">
+                                    <i class="material-icons">store</i>
+                                </div>
+                                <div class="card-content">
+                                    <p class="category">Amount Spent</p>
+                                    <h3 class="title">${{aggs.amount_spent.value}}</h3>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                        <i class="material-icons">date_range</i> Just Updated
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="card card-stats">
+                                <div class="card-header" data-background-color="purple">
+                                    <i class="material-icons">info_outline</i>
+                                </div>
+                                <div class="card-content">
+                                    <p class="category">Activites</p>
+                                    <h3 class="title">{{aggs.number_of_activities.value}}</h3>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                         <i class="material-icons">date_range</i> Just Updated
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="card card-stats">
+                                <div class="card-header" data-background-color="blue">
+                                    <i class="material-icons">account_circle</i>
+                                </div>
+                                <div class="card-content">
+                                    <p class="category">Lives Affected</p>
+                                    <h3 class="title">{{aggs.beneficiary_number.value}} lives</h3>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                         <i class="material-icons">date_range</i> Just Updated
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                       
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header card-chart" data-background-color="red">
+                                    <div class="ct-chart" id="completedTasksChart"></div>
+                                </div>
+                                <div class="card-content">
+                                    <h4 class="title">Lives Affected Over Time</h4>
+                                    <p class="category">The lives touched by this project accoss all activities</p>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                        <i class="material-icons">access_time</i> Last Update 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header card-chart" data-background-color="green">
+                                    <div class="ct-chart" id="dailySalesChart"></div>
+                                </div>
+                                <div class="card-content">
+                                    <h4 class="title">Volunteers</h4>
+                                    <p class="category">The number of volunteers for each month</p>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                        <i class="material-icons">access_time</i> Last Updated
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header card-chart" data-background-color="orange">
+                                    <div class="ct-chart" id="emailsSubscriptionChart"></div>
+                                </div>
+                                <div class="card-content">
+                                    <h4 class="title">Spending Over Time</h4>
+                                    <p class="category">How much the project has spent and when</p>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                        <i class="material-icons">access_time</i> Last Update
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    <div class="row">
+                      
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card">
+                                <div class="card-header" data-background-color="blue">
+                                    <h4 class="title">Activities</h4>
+                                    <p class="category">Here are the current Activities of the project</p>
+                                </div>
+                                <div class="card-content table-responsive">
+                                    <table class="table table-hover">
+                                        <thead class="text-warning">
+                                            
+                                            <th>Activiity Name</th>
+                                            <th>Activity Budget</th>
+                                            <th>Activity Beneficiaries</th>
+                                        </thead>
+                                        <tbody>
+                                            {{#each project.project.activities}}
+                                            <tr onclick="getActivity('{{../project.id}}','{{id}}')">
+                                                <td>{{activityName}}</td>
+                                                <td>${{activityAmount}}</td>
+                                                <td>{{activityBeneficiaries}} lives</td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>

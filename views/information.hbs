@@ -1,0 +1,273 @@
+<div class="wrapper">
+    <div class="sidebar" data-color="blue" data-image="/images/sidebar-1.jpg">
+        <!--
+        Tip 1: You can change the color of the sidebar using: data-color="blue | blue | green | orange | red"
+
+        Tip 2: you can also add an image using data-image tag
+    -->
+        <div class="logo">
+            <a href="#" class="simple-text">
+                {{project.projectName}}
+            </a>
+        </div>
+        <div class="sidebar-wrapper">
+            <ul class="nav">
+                <li>
+                    <a href="/home/{{id}}">
+                        <i class="material-icons">dashboard</i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="/info/{{id}}">
+                        <i class="material-icons">person</i>
+                        <p>User Profile</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="main-panel">
+        <nav class="navbar navbar-transparent navbar-absolute">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Dashboard </a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="material-icons">dashboard</i>
+                                <p class="hidden-lg hidden-md">Dashboard</p>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="material-icons">notifications</i>
+                                <span class="notification">5</span>
+                                <p class="hidden-lg hidden-md">Notifications</p>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Mike John responded to your email</a>
+                                </li>
+                                <li>
+                                    <a href="#">You have 5 new tasks</a>
+                                </li>
+                                <li>
+                                    <a href="#">You're now friend with Andrew</a>
+                                </li>
+                                <li>
+                                    <a href="#">Another Notification</a>
+                                </li>
+                                <li>
+                                    <a href="#">Another One</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="material-icons">person</i>
+                                <p class="hidden-lg hidden-md">Profile</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <form class="navbar-form navbar-right" role="search">
+                        <div class="form-group  is-empty">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <span class="material-input"></span>
+                        </div>
+                        <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                            <i class="material-icons">search</i>
+                            <div class="ripple-container"></div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h2>{{project.projectName}}</h2>
+                        <p>{{applicationData.projectSynopsis}}</p>
+                    </div>
+                    <div class="col-md-6" style="margin-top:10px">
+                        <div class="card">
+                            <div class="card-header" data-background-color="blue">
+                                <h4 class="title">User Profile</h4>
+                                <p class="category">Current Project Creator and Curator</p>
+                            </div>
+                            <div class="card-content">
+                                <h3>User Profile</h3>
+                                <div style="margin-top:20px">
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Full Name:
+                                        <p style="display:inline;font-weight:bold">{{fullName}}</p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Address:
+                                        <p style="display:inline;font-weight:bold">{{address}}</p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Major:
+                                        <p style="display:inline;font-weight:bold">{{major}}</p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Graduation Year:
+                                        <p style="display:inline;font-weight:bold">{{year}}</p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Phone:
+                                        <p style="display:inline;font-weight:bold">{{phone}}</p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Application Status:
+                                        <p style="display:inline;font-weight:bold">{{applicationStatus}}</p>
+                                    </span>
+
+                                </div>
+
+                                <h3>Project Leads</h3>
+                                {{#each applicationData.projectLeads}}
+                                <div style="margin-top:20px">
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Name:
+                                        <p style="display:inline;font-weight:bold">{{name}}</p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Role:
+                                        <p style="display:inline;font-weight:bold">{{role}}</p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Motivation:
+                                        <p style="display:inline;font-weight:bold">{{motivation}}</p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">File:
+                                        <p style="display:inline;font-weight:bold">
+                                            <a href="{{file}}">Download</a>
+                                        </p>
+                                    </span>
+                                </div>
+                                {{/each}}
+
+                                <h3>Community Research</h3>
+                                <div style="margin-top:20px">
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Community Research:
+                                        <p style="display:inline;font-weight:bold">{{applicationData.communityEngagement}}</p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Community Asset:
+                                        <p style="display:inline;font-weight:bold">{{applicationData.communityAssets}} </p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Community Approach:
+                                        <p style="display:inline;font-weight:bold">{{applicationData.communityApproach}}</p>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" style="margin-top:10px">
+                        <div class="card">
+                            <div class="card-header" data-background-color="blue">
+                                <h4 class="title">Project Application</h4>
+                                <p class="category">Current Project Information </p>
+                            </div>
+                            <div class="card-content">
+                                <h3>Target Community</h3>
+                                {{#each applicationData.targetCommunity}}
+                                <div style="margin-top:20px">
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Community:
+                                        <p style="display:inline;font-weight:bold">{{community}}</p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Community Population:
+                                        <p style="display:inline;font-weight:bold">{{population}}</p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Community Need:
+                                        <p style="display:inline;font-weight:bold">{{need}}</p>
+                                    </span>
+                                </div>
+                                {{/each}}
+
+                                <h3>Objectives</h3>
+                                <div style="margin-top:20px">
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Objective Description:
+                                        <p style="display:inline;font-weight:bold">{{applicationData.objeciveDescription}}</p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Objective Target:
+                                        <p style="display:inline;font-weight:bold">{{applicationData.objectiveTarget}}</p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Objective Challenges:
+                                        <p style="display:inline;font-weight:bold">{{applicationData.challenges}}</p>
+                                    </span>
+                                </div>
+
+                                 <h3>Volunteers</h3>
+                                <div style="margin-top:20px">
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Volunteer Roles:
+                                        <p style="display:inline;font-weight:bold">{{applicationData.volunteerRoles}}</p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Volunteer Numbers:
+                                        <p style="display:inline;font-weight:bold">{{applicationData.volunteerNumbers}}</p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Volunteer Source:
+                                        <p style="display:inline;font-weight:bold">{{applicationData.volunteerSource}}</p>
+                                    </span>
+                                </div>
+
+                                 <h3>Other</h3>
+                                <div style="margin-top:20px">
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">External Partners:
+                                        <p style="display:inline;font-weight:bold">{{applicationData.volunteerSource}}</p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Community Sharing:
+                                        <p style="display:inline;font-weight:bold">{{applicationData.communitySharing}}</p>
+                                    </span>
+                                    <span style="color:gray;font-size:12px;display:block;margin-top:5px">Preference:
+                                        <p style="display:inline;font-weight:bold">{{applicationData.preference}}</p>
+                                    </span>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container-fluid">
+                <nav class="pull-left">
+                    <ul>
+                        <li>
+                            <a href="#">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Company
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Portfolio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Blog
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <p class="copyright pull-right">
+                    &copy;
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script>
+                    <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
+                </p>
+            </div>
+        </footer>
+    </div>
+</div>
