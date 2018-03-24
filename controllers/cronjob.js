@@ -1,5 +1,5 @@
 var schedule = require('node-schedule');
-var elasticsearch = require('../repositories/elasticsearch')
+var elasticsearch = require('../repositories/elasticSearch')
 var stitch = require("../repositories/mongoDb")
 const hasha = require('hasha');
 
