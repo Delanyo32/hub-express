@@ -5,7 +5,7 @@ function login(){
         email:userName,
         password:password
     }
-    $.post("http://localhost:3000/api/login",data).done(
+    $.post("/api/login",data).done(
         function(data){
             if(data.status){
                 window.location.href = '/projects';
@@ -35,7 +35,7 @@ function addComment(activityId){
         comment:comment
     }
 
-    $.post("http://localhost:3000/api/addComment",data).done(
+    $.post("/api/addComment",data).done(
         function(res){
             if(res.status){
                 console.log(res.data.comment)

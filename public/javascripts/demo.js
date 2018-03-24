@@ -7,7 +7,7 @@ function getBeneficiariesOverTime() {
     var data = {
         "id": "5aa986adcfb7372ba6f7e9c2"
     }
-    $.post("http://localhost:3000/api/getBeneficiariesOverTime", data).done(
+    $.post("/api/getBeneficiariesOverTime", data).done(
         function (res) {
             if (res.status) {
                 res.data.forEach(el => {
@@ -79,7 +79,7 @@ demo = {
         var data = {
             "id": localStorage.getItem("projectId")
         }
-        $.post("http://localhost:3000/api/getBeneficiariesOverTime", data).done(
+        $.post("/api/getBeneficiariesOverTime", data).done(
             function (res) {
                 var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
                 var selectedMonths = []
@@ -125,7 +125,7 @@ demo = {
 
         /* ----------==========         ==========---------- */
 
-        $.post("http://localhost:3000/api/getSpendingOverTime", data).done(
+        $.post("/api/getSpendingOverTime", data).done(
             function (res) {
                 var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
                 var selectedMonths = []
@@ -169,7 +169,7 @@ demo = {
             })
 
 
-            $.post("http://localhost:3000/api/getVolunteersOverTime", data).done(
+            $.post("/api/getVolunteersOverTime", data).done(
                 function (res) {
                     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
                     var selectedMonths = []
