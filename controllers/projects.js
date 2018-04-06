@@ -1,6 +1,8 @@
 var stitch = require("../repositories/mongoDb")
 var elastic_update = require('../controllers/elasticUpdate')
 var express = require('express');
+var auth = require("./authentication")
+
 
 function updateElasticMongo (){
     stitch.then(client => {
@@ -40,6 +42,43 @@ exports.getProjects = function (req, res) {
             response.message = "User Must Auth"
             response.data = null
             res.render('login',{});
+        }
+
+    }).catch((error) => {
+        var response = {}
+        response.status = false
+        response.message = error.message
+        response.data = null
+        res.json(response)
+    })
+}
+
+exports.getProjectsApi = function (req, res) {
+    stitch.then(client => {
+        if (client.authedId()) {
+            client.executeFunction("getProjects", client.authedId()).then((result) => {
+                if (result) {
+                    var response = {}
+                    response.status = true
+                    response.message = "List of all Projects"
+                    response.data = result
+                    //elastic_update.updateElastic(result)
+                    //res.render('projects',{data:result});
+                    res.json(response)
+                } else {
+                    var response = {}
+                    response.status = false
+                    response.message = "No projects Returned"
+                    response.data = result
+                    res.json(response)
+                }
+            })
+        }else{
+            var response = {}
+            response.status = false
+            response.message = "User Must Auth"
+            response.data = null
+            res.json(response);
         }
 
     }).catch((error) => {

@@ -99,6 +99,41 @@ exports.getProjectInfo = function (req, res) {
     })
 }
 
+exports.getProjectInfoApi = function (req, res) {
+    stitch.then(client => {
+        if (client.authedId()) {
+            elasticsearch.get({
+                index: 'users',
+                type: 'user',
+                id: req.body.id
+            }, function (error, reponse) {
+                if (error) {
+                    var response = {}
+                    response.status = false
+                    response.message = error
+                    response.data = reponse
+                    res.json(response)
+                } else {
+                    var response = {}
+                    response.status = true
+                    response.message = "Specified project"
+                    response.data = reponse._source
+                    //console.log(response.data._source)
+                    res.json(response);
+                }
+            }
+            )
+        } else {
+            var response = {}
+            response.status = false
+            response.message = "User Must Auth"
+            response.data = null
+            res.json(response)
+            //res.render('login', {});
+        }
+    })
+}
+
 
 exports.getProjectActivity = function (req, res) {
     stitch.then(client => {

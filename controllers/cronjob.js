@@ -8,11 +8,12 @@ var rule = new schedule.RecurrenceRule();
 
 rule.minute = new schedule.Range(0, 59, 1);
 
+var key = "yoo0eddYi3aECftllDDAZjwbyakdCWivfmZ2Daeg4kRFkpJqTO7y9dfSCnyYcZtQ"
 
 schedule.scheduleJob(rule, function() {
     console.log("started")
     stitch.then(client => {
-        client.login("daborchie@gmail.com", "digimonmonsters").then((data) => {
+        client.authenticate('apiKey', key).then((data) => {
             client.executeFunction("getProjects", client.authedId()).then((result) => {
                 if(result){
                     var bulkBody = []
@@ -30,6 +31,7 @@ schedule.scheduleJob(rule, function() {
                                 activity.spending.forEach(spending=>{
                                     spending.projectId = entry.id
                                     spending.activityId = activity.id
+                                    spending.activityName = activity.activityName
                                     var id = hasha(spending.moneySpent+spending.itemName,{algorithm: 'md5'})
                                     var data ={}
                                     data.index = {
@@ -49,6 +51,7 @@ schedule.scheduleJob(rule, function() {
                                 activity.volunteers.forEach(volunteers=>{
                                     volunteers.projectId = entry.id
                                     volunteers.activityId = activity.id
+                                    volunteers.activityName = activity.activityName
                                     var id = hasha(volunteers.volunteerName+volunteers.volunteerEmail,{algorithm: 'md5'})
                                     var data ={}
                                     data.index = {
@@ -67,6 +70,7 @@ schedule.scheduleJob(rule, function() {
                                 activity.beneficiaries.forEach(beneficiaries=>{
                                     beneficiaries.projectId = entry.id
                                     beneficiaries.activityId = activity.id
+                                    beneficiaries.activityName = activity.activityName
                                     var id = hasha(beneficiaries.beneficiaryNumber+beneficiaries.beneficiaryDemography,{algorithm: 'md5'})
                                     var data ={}
                                     data.index = {
@@ -104,7 +108,7 @@ schedule.scheduleJob(rule, function() {
                             }
                         })
                     }
-
+                        //console.log(entryBeneficiaries)
                         if(entryBeneficiaries.length>0){
                          
                         elasticsearch.bulk({
