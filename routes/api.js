@@ -18,6 +18,8 @@ router.post('/getProjectById',elastic_aggs_controller.getAggregationsApi)
 
 router.post('/addComment' , projects_controller.addcomment)
 
+router.post('/updateProject', projects_controller.updateProject)
+
 router.post('/getAggregations' , elastic_aggs_controller.getAggregations)
 
 

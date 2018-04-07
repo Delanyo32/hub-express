@@ -4,11 +4,11 @@ var express = require('express');
 var auth = require("./authentication")
 
 
-function updateElasticMongo (){
+function updateElasticMongo() {
     stitch.then(client => {
         if (client.authedId()) {
             client.executeFunction("getProjects", client.authedId()).then((result) => {
-                if(result){
+                if (result) {
                     elastic_update.updateElastic(result)
                 }
             })
@@ -27,7 +27,7 @@ exports.getProjects = function (req, res) {
                     response.message = "List of all Projects"
                     response.data = result
                     elastic_update.updateElastic(result)
-                    res.render('projects',{data:result});
+                    res.render('projects', { data: result });
                 } else {
                     var response = {}
                     response.status = false
@@ -36,12 +36,12 @@ exports.getProjects = function (req, res) {
                     res.json(response)
                 }
             })
-        }else{
+        } else {
             var response = {}
             response.status = false
             response.message = "User Must Auth"
             response.data = null
-            res.render('login',{});
+            res.render('login', {});
         }
 
     }).catch((error) => {
@@ -73,7 +73,7 @@ exports.getProjectsApi = function (req, res) {
                     res.json(response)
                 }
             })
-        }else{
+        } else {
             var response = {}
             response.status = false
             response.message = "User Must Auth"
@@ -99,45 +99,51 @@ exports.addcomment = function (req, res) {
 
             let users = db.collection("users");
 
-            users.find({ "owner_id": client.authedId() }, null).execute().then((data) => {
+            users.find({ "owner_id": req.body.id }, null).execute().then((data) => {
+
                 var newcomment = {
-                    comment:req.body.comment,
-                    date:new Date().toDateString(),
-                    userName:data[0].fullName,
-                    timestamp:Date.now()
+                    comment: req.body.comment,
+                    date: new Date().toDateString(),
+                    userName: "Admin",
+                    timestamp: Date.now()
                 }
-                
-                var activity = data[0].project.activities.find(function(element){
+
+                var activity = data[0].project.activities.find(function (element) {
                     return element.id = req.body.activityId
                 })
-                //console.log(activity)
-                if(activity.comments){
+                console.log(activity.id)
+                if (activity.comments) {
                     activity.comments.push(newcomment)
-                    data[0].project.activities.forEach(el=>{
-                        if(el.id === req.body.activityId){
+                    data[0].project.activities.forEach(el => {
+                        if (el.id === req.body.activityId) {
                             el = activity
                         }
                     })
-                    
-                }else{
+                    console.log("has comments")
+                } else {
+                    console.log("no comments")
                     var array = []
                     array.push(newcomment)
                     activity['comments'] = array
+                    console.log(activity)
 
-                    data[0].project.activities.forEach(el=>{
-                        if(el.id === req.body.activityId){
+                    data[0].project.activities.forEach(el => {
+                        if (el.id === req.body.activityId) {
                             el = activity
                         }
                     })
+
+                    //console.log(data[0].project.activities)
                 }
 
-                users.updateOne({ owner_id: client.authedId() }, { $set: { project: data[0].project } }).then((ret) => {
-                    updateElasticMongo()
-                    //console.log(data[0])
+                users.updateOne({ owner_id: req.body.id }, { $set: { project: data[0].project } }).then((ret) => {
+                    //updateElasticMongo()
+                    //console.log(data[0].project)
+
                     var activityData = {
-                        userId:data[0]._id,
-                        id:req.body.activityId,
-                        comment:newcomment
+                        userId: req.body.id,
+                        id: req.body.activityId,
+                        comment: newcomment
 
                     }
                     var response = {}
@@ -149,12 +155,46 @@ exports.addcomment = function (req, res) {
                     res.json(response)
                 });
             })
-        }else{
+        } else {
             var response = {}
             response.status = false
             response.message = "User Must Auth"
             response.data = null
-            res.render('login',{});
+            res.json(response);
+        }
+
+    }).catch((error) => {
+        var response = {}
+        response.status = false
+        response.message = error.message
+        response.data = null
+        res.json(response)
+    })
+
+}
+
+exports.updateProject = function (req, res) {
+
+    stitch.then(client => {
+        if (client.authedId()) {
+            let db = client.service("mongodb", "mongodb-atlas").db("hub");
+
+            let users = db.collection("users");
+
+            users.updateOne({ owner_id: req.body.owner_id }, { $set: { project: req.body.project } }).then((ret) => {
+
+                var response = {}
+                response.status = true
+                response.message = "Project Updated"
+                response.data = req.body
+                res.json(response)
+            });
+        } else {
+            var response = {}
+            response.status = false
+            response.message = "User Must Auth"
+            response.data = null
+            res.json(response);
         }
 
     }).catch((error) => {

@@ -375,7 +375,7 @@ exports.rangeVolunteersOverTime = function(req , res){
                         "aggs": {
                           "volunteers_count": {
                             "value_count": {
-                              "field": "volunteerName"
+                              "field": "volunteerName.keyword"
                             }
                           }
                         }
@@ -559,7 +559,7 @@ exports.volunteersBreakdown = function(req , res){
                         "aggs": {
                           "volunteers_count": {
                             "value_count": {
-                              "field": "volunteerName"
+                              "field": "volunteerName.keyword"
                             }
                           }
                         }
