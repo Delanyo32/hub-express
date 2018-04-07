@@ -9,7 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var api = require('./routes/api')
 var job = require('./controllers/cronjob')
-
+var cors = require('cors')
 var app = express();
 
 // view engine setup
@@ -23,6 +23,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+var corsOptions = {
+  origin: 'https://ashesihub.firebaseapp.com',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
+}
+
+app.use(cors(corsOptions)) 
 
 app.use('/', index);
 app.use('/users', users);
