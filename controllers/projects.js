@@ -58,6 +58,7 @@ exports.getProjectsApi = function (req, res) {
         if (client.authedId()) {
             client.executeFunction("getProjects", client.authedId()).then((result) => {
                 if (result) {
+                    //console.log(result)
                     var response = {}
                     response.status = true
                     response.message = "List of all Projects"

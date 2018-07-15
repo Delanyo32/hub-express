@@ -18,7 +18,6 @@ schedule.scheduleJob(rule, function() {
                 if(result){
                     var bulkBody = []
                     result.forEach(entry => {
-
                         entry.id = entry._id
                         delete entry._id
                         var entrySpending = []
@@ -32,7 +31,7 @@ schedule.scheduleJob(rule, function() {
                                     spending.projectId = entry.id
                                     spending.activityId = activity.id
                                     spending.activityName = activity.activityName
-                                    var id = hasha(spending.moneySpent+spending.itemName,{algorithm: 'md5'})
+                                    var id = hasha((spending.moneySpent+spending.itemName).toString(),{algorithm: 'md5'})
                                     var data ={}
                                     data.index = {
                                         _index:'spending',
@@ -41,8 +40,8 @@ schedule.scheduleJob(rule, function() {
                                     }
                                     // console.log(data)
                                     
-                                    entrySpending.push(data)
-                                    entrySpending.push(spending)
+                                    bulkBody.push(data)
+                                    bulkBody.push(spending)
     
                                 })
                             }
@@ -52,7 +51,7 @@ schedule.scheduleJob(rule, function() {
                                     volunteers.projectId = entry.id
                                     volunteers.activityId = activity.id
                                     volunteers.activityName = activity.activityName
-                                    var id = hasha(volunteers.volunteerName+volunteers.volunteerEmail,{algorithm: 'md5'})
+                                    var id = hasha((volunteers.volunteerName+volunteers.volunteerEmail).toString(),{algorithm: 'md5'})
                                     var data ={}
                                     data.index = {
                                         _index:'volunteers',
@@ -60,8 +59,8 @@ schedule.scheduleJob(rule, function() {
                                         _id:id
                                     }
     
-                                    entryVolunteers.push(data)
-                                    entryVolunteers.push(volunteers)
+                                    bulkBody.push(data)
+                                    bulkBody.push(volunteers)
     
                                 })
                             }
@@ -71,7 +70,7 @@ schedule.scheduleJob(rule, function() {
                                     beneficiaries.projectId = entry.id
                                     beneficiaries.activityId = activity.id
                                     beneficiaries.activityName = activity.activityName
-                                    var id = hasha(beneficiaries.beneficiaryNumber+beneficiaries.beneficiaryDemography,{algorithm: 'md5'})
+                                    var id = hasha((beneficiaries.beneficiaryNumber+beneficiaries.beneficiaryDemography).toString(),{algorithm: 'md5'})
                                     var data ={}
                                     data.index = {
                                         _index:'beneficiaries',
@@ -79,47 +78,47 @@ schedule.scheduleJob(rule, function() {
                                         _id:id
                                     }
     
-                                    entryBeneficiaries.push(data)
-                                    entryBeneficiaries.push(beneficiaries)
+                                    bulkBody.push(data)
+                                    bulkBody.push(beneficiaries)
                    
                                 })
                             }
                         })
 
-                        if(entrySpending.length>0){
+                    //     if(entrySpending.length>0){
                             
-                        elasticsearch.bulk({
-                            body: entrySpending,
-                        }, function (err, resp) {
-                            if (err) { console.log(err) }
-                            else { 
-                                console.log("Spending Index Update Successful")
-                            }
-                        })
-                    }
-                        if(entryVolunteers.length>0){
+                    //     elasticsearch.bulk({
+                    //         body: entrySpending,
+                    //     }, function (err, resp) {
+                    //         if (err) { console.log(err) }
+                    //         else { 
+                    //             console.log("Spending Index Update Successful")
+                    //         }
+                    //     })
+                    // }
+                    //     if(entryVolunteers.length>0){
                          
-                        elasticsearch.bulk({
-                            body: entryVolunteers,
-                        }, function (err, resp) {
-                            if (err) { console.log(err) }
-                            else { 
-                                console.log("Volunteers Index Update Successful")
-                            }
-                        })
-                    }
-                        //console.log(entryBeneficiaries)
-                        if(entryBeneficiaries.length>0){
+                    //     elasticsearch.bulk({
+                    //         body: entryVolunteers,
+                    //     }, function (err, resp) {
+                    //         if (err) { console.log(err) }
+                    //         else { 
+                    //             console.log("Volunteers Index Update Successful")
+                    //         }
+                    //     })
+                    // }
+                    //     //console.log(entryBeneficiaries)
+                    //     if(entryBeneficiaries.length>0){
                          
-                        elasticsearch.bulk({
-                            body: entryBeneficiaries,
-                        }, function (err, resp) {
-                            if (err) { console.log(err) }
-                            else { 
-                                console.log("Beneficiaries Index Update Successful")
-                            }
-                        })
-                    }
+                    //     elasticsearch.bulk({
+                    //         body: entryBeneficiaries,
+                    //     }, function (err, resp) {
+                    //         if (err) { console.log(err) }
+                    //         else { 
+                    //             console.log("Beneficiaries Index Update Successful")
+                    //         }
+                    //     })
+                    // }
 
                         var data ={}
                         data.index = {
@@ -136,7 +135,9 @@ schedule.scheduleJob(rule, function() {
                         body: bulkBody,
                     }, function (err, resp) {
                         if (err) { console.log(err) }
-                        else { //console.log(resp) 
+                        else { 
+                            console.log("Errytin good:  "+resp) 
+                            
                         }
                     })
                 }
