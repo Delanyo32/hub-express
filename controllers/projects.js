@@ -2,7 +2,7 @@ var stitch = require("../repositories/mongoDb")
 var elastic_update = require('../controllers/elasticUpdate')
 var express = require('express');
 var auth = require("./authentication")
-
+var elasticsearch = require('../repositories/elasticSearch')
 
 function updateElasticMongo() {
     stitch.then(client => {
@@ -206,4 +206,64 @@ exports.updateProject = function (req, res) {
         res.json(response)
     })
 
+}
+
+exports.deleteProject = function(req, res){
+    stitch.then(client => {
+        if (client.authedId()){
+            let db = client.service("mongodb", "mongodb-atlas").db("hub");
+            let users = db.collection("users");
+
+            users.deleteOne({_id:req.body._id}).then((result) => {
+                if (result) {
+                    var response = {};
+                    response.status = true;
+                    response.message = "Project Deleted";
+                    response.data = result;
+                    // elastic_update.updateElastic(result)
+                    // res.render('projects', { data: result });
+                    res.json(response);
+                } else {
+                    var response = {}
+                    response.status = false
+                    response.message = "No projects Deleted"
+                    response.data = result
+                    res.json(response)
+                }
+            })
+        } else {
+            var response = {}
+            response.status = false
+            response.message = "User Must Auth"
+            response.data = null
+            res.render('login', {});
+        }
+        elasticsearch.delete({
+            index: 'users',
+            type: 'user',
+            id: req.body._id
+        }, function(error,data){
+            if (error) {
+                var response = {}
+                response.status = false
+                response.message = error
+                response.data = data
+                //res.json(response)
+            } else {
+                var response = {}
+                response.status = true
+                response.message = "project deleted"
+                //response.project = data.hits.hits[0]._source
+                console.log(data.hits)
+                res.json(response);
+            }
+        })
+
+    }).catch((error) => {
+        var response = {}
+        response.status = false
+        response.message = error.message
+        response.data = null
+        res.json(response)
+    })
 }

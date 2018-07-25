@@ -14,6 +14,8 @@ router.post('/getProjects',projects_controller.getProjectsApi)
 
 router.post('/getProjectById',elastic_aggs_controller.getAggregationsApi)
 
+router.delete('/deleteProjectById', projects_controller.deleteProject)
+
 //router.post('/getProject' , elasticsearch_controller.getProject)
 
 router.post('/addComment' , projects_controller.addcomment)
