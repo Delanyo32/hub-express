@@ -85,41 +85,6 @@ schedule.scheduleJob(rule, function() {
                             }
                         })
 
-                    //     if(entrySpending.length>0){
-                            
-                    //     elasticsearch.bulk({
-                    //         body: entrySpending,
-                    //     }, function (err, resp) {
-                    //         if (err) { console.log(err) }
-                    //         else { 
-                    //             console.log("Spending Index Update Successful")
-                    //         }
-                    //     })
-                    // }
-                    //     if(entryVolunteers.length>0){
-                         
-                    //     elasticsearch.bulk({
-                    //         body: entryVolunteers,
-                    //     }, function (err, resp) {
-                    //         if (err) { console.log(err) }
-                    //         else { 
-                    //             console.log("Volunteers Index Update Successful")
-                    //         }
-                    //     })
-                    // }
-                    //     //console.log(entryBeneficiaries)
-                    //     if(entryBeneficiaries.length>0){
-                         
-                    //     elasticsearch.bulk({
-                    //         body: entryBeneficiaries,
-                    //     }, function (err, resp) {
-                    //         if (err) { console.log(err) }
-                    //         else { 
-                    //             console.log("Beneficiaries Index Update Successful")
-                    //         }
-                    //     })
-                    // }
-
                         var data ={}
                         data.index = {
                             _index:'users',

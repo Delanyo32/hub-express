@@ -10,6 +10,8 @@ PUT /beneficiaries
 PUT /volunteers
 PUT /spending
 
+PUT /users
+
 PUT beneficiaries/_mapping/beneficiaries
 {
    "beneficiaries": {

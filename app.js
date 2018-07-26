@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
 var api = require('./routes/api')
 var job = require('./controllers/cronjob')
 var cors = require('cors')
@@ -36,7 +35,6 @@ var corsOptions = {
 app.use(cors(corsOptions)) 
 
 app.use('/', index);
-app.use('/users', users);
 app.use('/api', api);
 
 
