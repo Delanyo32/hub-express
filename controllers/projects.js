@@ -268,34 +268,71 @@ exports.deleteProject = function(req, res){
     })
 }
 
-exports.getProjectsSummary = function (req, res){
-    stitch.then(client =>{
-        if (client.authedId()) {
-            client.executeFunction("getProjects", client.authedId()).then((result) => {
-                if (result) {
-                    var response = {}
-                    response.status = true
-                    response.message = "List of all Projects"
-                    response.data = result;
-                    summary = response.data;
-                    var sum = [];
-                    for (let i = 0; i<summary.length;i++){
-                        var data = {};
-                        data.projectName = summary[i].project.projectName;
-                        data.ProjectId = summary[i]._id;
-                        data.ProjectOwner = summary[i].fullName;
-                        sum.push(data);   
-                    }
-                    res.json(sum)
-                } else {
+// exports.getProjectsSummary = function (req, res){
+//     stitch.then(client =>{
+//         if (client.authedId()) {
+//             client.executeFunction("getProjects", client.authedId()).then((result) => {
+//                 if (result) {
+//                     var response = {}
+//                     response.status = true
+//                     response.message = "List of all Projects"
+//                     response.data = result;
+//                     summary = response.data;
+//                     var sum = [];
+//                     for (let i = 0; i<summary.length;i++){
+//                         var data = {};
+//                         data.projectName = summary[i].project.projectName;
+//                         data.ProjectId = summary[i]._id;
+//                         data.ProjectOwner = summary[i].fullName;
+//                         sum.push(data);   
+//                     }
+//                     res.json(sum)
+//                 } else {
+//                     var response = {}
+//                     response.status = false
+//                     response.message = "No projects Returned"
+//                     response.data = result
+//                     res.json(response)
+//                 }
+//             })
+//         } else {
+//             var response = {}
+//             response.status = false
+//             response.message = "User Must Auth"
+//             response.data = null
+//             res.json(response);
+//         }
+//     }).catch((error) =>{
+//         var response = {}
+//         response.status = false
+//         response.message = error.message
+//         response.data = null
+//         res.json(response)
+//     })
+// }
+exports.getProjectsSummary = function (req,res) {
+    stitch.then(client => {
+        if(client.authedId()) {
+            elasticsearch.search({
+                index: "users",
+                type: "user",
+                _sourceInclude: ["fullName","project.projectName"]
+            },function(error,data){
+                if (error) {
                     var response = {}
                     response.status = false
-                    response.message = "No projects Returned"
-                    response.data = result
+                    response.message = error
+                    response.data = data
                     res.json(response)
+                } else{
+                    var response = {}
+                    response.status = true
+                    response.message = "projects summary"
+                    response.projects = data.hits.hits
+                    res.json(response);
                 }
             })
-        } else {
+        } else{
             var response = {}
             response.status = false
             response.message = "User Must Auth"
