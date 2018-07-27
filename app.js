@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var api = require('./routes/api')
-var job = require('./controllers/cronjob')
+// var job = require('./controllers/cronjob')
 var cors = require('cors')
 var app = express();
 
@@ -37,26 +37,6 @@ app.use(cors(corsOptions))
 app.use('/', index);
 app.use('/api', api);
 
-
-// app.get('/admin/*', function(req, res) {
-//   res.sendFile(path.join(__dirname + '/admin/dist/index.html'));
-// });
-
-// app.get('/client/*', function(req, res) {
-//   res.sendFile(path.join(__dirname + '/client/build/index.html'));
-// });
-
-// Admin paths
-app.use('/admin/', express.static(path.join(__dirname, 'admin','dist')))
-app.get('/admin/*', function (req, res) {
- res.sendFile(path.join(__dirname, './admin','dist', 'index.html'));
-});
-
-// Site path
-app.use('/', express.static(path.join(__dirname, 'client','build')))
-app.get('/*', function (req, res) {
- res.sendFile(path.join(__dirname, 'client','build', 'index.html'));
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

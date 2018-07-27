@@ -3,6 +3,7 @@ var authenication_controller = require("../controllers/authentication")
 var projects_controller = require("../controllers/projects")
 var elasticsearch_controller = require('../controllers/elasticUpdate') 
 var elastic_aggs_controller = require('../controllers/elasticAggregates')
+var triggers = require("../controllers/triggers")
 var router = express.Router();
 
 /* GET users listing. */
@@ -48,5 +49,10 @@ router.post('/beneficiariesBreakdown' , elastic_aggs_controller.beneficiariesBre
 router.post('/spendingBreakdown' , elastic_aggs_controller.spendingBreakdown)
 
 router.post('/volunteersBreakdown' , elastic_aggs_controller.volunteersBreakdown)
+
+router.post('/triggerNewUser',triggers.triggerNewUser)
+
+router.post('/triggerDeleteUser',triggers.triggerDelete)
+
 
 module.exports = router;
