@@ -1,7 +1,6 @@
 var express = require('express');
 var authenication_controller = require("../controllers/authentication")
 var projects_controller = require("../controllers/projects")
-var elasticsearch_controller = require('../controllers/elasticUpdate') 
 var elastic_aggs_controller = require('../controllers/elasticAggregates')
 var triggers = require("../controllers/triggers")
 var router = express.Router();
@@ -17,7 +16,7 @@ router.post('/getProjectById',elastic_aggs_controller.getAggregationsApi)
 
 router.post('/getProjectsSummary',projects_controller.getProjectsSummary)
 
-router.delete('/deleteProjectById', projects_controller.deleteProject)
+router.post('/deleteProjectById', projects_controller.deleteProject)
 
 //router.post('/getProject' , elasticsearch_controller.getProject)
 

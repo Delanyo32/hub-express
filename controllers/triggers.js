@@ -104,7 +104,7 @@ exports.triggerNewUser = function (req, res) {
 
 
 exports.triggerDelete = function (req, res) {
-    console.log(req.body.documentKey._id)
+    console.log(req.body)
     elasticsearch.delete({
         index: 'users',
         type: 'user',

@@ -1,20 +1,8 @@
 var stitch = require("../repositories/mongoDb")
-var elastic_update = require('../controllers/elasticUpdate')
 var express = require('express');
 var auth = require("./authentication")
 var elasticsearch = require('../repositories/elasticSearch')
 
-function updateElasticMongo() {
-    stitch.then(client => {
-        if (client.authedId()) {
-            client.executeFunction("getProjects", client.authedId()).then((result) => {
-                if (result) {
-                    elastic_update.updateElastic(result)
-                }
-            })
-        }
-    })
-}
 
 
 exports.getProjects = function (req, res) {
@@ -26,8 +14,9 @@ exports.getProjects = function (req, res) {
                     response.status = true
                     response.message = "List of all Projects"
                     response.data = result
-                    elastic_update.updateElastic(result)
-                    res.render('projects', { data: result });
+                    res.render('projects', {
+                        data: result
+                    });
                 } else {
                     var response = {}
                     response.status = false
@@ -100,7 +89,9 @@ exports.addcomment = function (req, res) {
 
             let users = db.collection("users");
 
-            users.find({ "owner_id": req.body.id }, null).execute().then((data) => {
+            users.find({
+                "owner_id": req.body.id
+            }, null).execute().then((data) => {
 
                 var newcomment = {
                     comment: req.body.comment,
@@ -137,7 +128,13 @@ exports.addcomment = function (req, res) {
                     //console.log(data[0].project.activities)
                 }
 
-                users.updateOne({ owner_id: req.body.id }, { $set: { project: data[0].project } }).then((ret) => {
+                users.updateOne({
+                    owner_id: req.body.id
+                }, {
+                    $set: {
+                        project: data[0].project
+                    }
+                }).then((ret) => {
                     //updateElasticMongo()
                     //console.log(data[0].project)
 
@@ -182,7 +179,13 @@ exports.updateProject = function (req, res) {
 
             let users = db.collection("users");
 
-            users.updateOne({ owner_id: req.body.owner_id }, { $set: { project: req.body.project } }).then((ret) => {
+            users.updateOne({
+                owner_id: req.body.owner_id
+            }, {
+                $set: {
+                    project: req.body.project
+                }
+            }).then((ret) => {
 
                 var response = {}
                 response.status = true
@@ -208,30 +211,34 @@ exports.updateProject = function (req, res) {
 
 }
 
-exports.deleteProject = function(req, res){
+exports.deleteProject = function (req, res) {
+    console.log(req.body)
     stitch.then(client => {
-        if (client.authedId()){
+        if (client.authedId()) {
             let db = client.service("mongodb", "mongodb-atlas").db("hub");
             let users = db.collection("users");
 
-            users.deleteOne({_id:req.body._id}).then((result) => {
+            users.deleteOne({
+                _id: req.body._id
+            }).then((result) => {
                 if (result) {
                     elasticsearch.delete({
                         index: 'users',
                         type: 'user',
-                        id: req.body._id
-                    }, function(error,data){
+                        id: req.body.id
+                    }, function (error, data) {
                         if (error) {
+                            //console.log(error)
                             var response = {}
                             response.status = false
-                            response.message = error
-                            response.data = data
-                            //res.json(response)
+                            response.message = "Something bad happened"
+                            response.data = error
+                            res.json(response)
                         } else {
                             var response = {}
                             response.status = true
                             response.message = "project deleted"
-                            //response.project = data.hits.hits[0]._source
+                            response.data = data
                             console.log(data.hits)
                             res.json(response);
                         }
@@ -249,7 +256,7 @@ exports.deleteProject = function(req, res){
             response.status = false
             response.message = "User Must Auth"
             response.data = null
-            res.render('login', {});
+            res.json(response);
         }
     }).catch((error) => {
         var response = {}
@@ -260,63 +267,23 @@ exports.deleteProject = function(req, res){
     })
 }
 
-// exports.getProjectsSummary = function (req, res){
-//     stitch.then(client =>{
-//         if (client.authedId()) {
-//             client.executeFunction("getProjects", client.authedId()).then((result) => {
-//                 if (result) {
-//                     var response = {}
-//                     response.status = true
-//                     response.message = "List of all Projects"
-//                     response.data = result;
-//                     summary = response.data;
-//                     var sum = [];
-//                     for (let i = 0; i<summary.length;i++){
-//                         var data = {};
-//                         data.projectName = summary[i].project.projectName;
-//                         data.ProjectId = summary[i]._id;
-//                         data.ProjectOwner = summary[i].fullName;
-//                         sum.push(data);   
-//                     }
-//                     res.json(sum)
-//                 } else {
-//                     var response = {}
-//                     response.status = false
-//                     response.message = "No projects Returned"
-//                     response.data = result
-//                     res.json(response)
-//                 }
-//             })
-//         } else {
-//             var response = {}
-//             response.status = false
-//             response.message = "User Must Auth"
-//             response.data = null
-//             res.json(response);
-//         }
-//     }).catch((error) =>{
-//         var response = {}
-//         response.status = false
-//         response.message = error.message
-//         response.data = null
-//         res.json(response)
-//     })
-// }
-exports.getProjectsSummary = function (req,res) {
+exports.getProjectsSummary = function (req, res) {
     stitch.then(client => {
-        if(client.authedId()) {
+        if (client.authedId()) {
             elasticsearch.search({
                 index: "users",
                 type: "user",
-                _sourceInclude: ["fullName","project.projectName"]
-            },function(error,data){
+                _sourceInclude: ["fullName", "project.projectName"],
+                size:100000
+            }, function (error, data) {
                 if (error) {
                     var response = {}
                     response.status = false
                     response.message = error
                     response.data = data
                     res.json(response)
-                } else{
+                } else {
+                    console.log(data.hits.total)
                     var response = {}
                     response.status = true
                     response.message = "projects summary"
@@ -324,14 +291,14 @@ exports.getProjectsSummary = function (req,res) {
                     res.json(response);
                 }
             })
-        } else{
+        } else {
             var response = {}
             response.status = false
             response.message = "User Must Auth"
             response.data = null
             res.json(response);
         }
-    }).catch((error) =>{
+    }).catch((error) => {
         var response = {}
         response.status = false
         response.message = error.message

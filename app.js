@@ -5,9 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var index = require('./routes/index');
 var api = require('./routes/api')
-// var job = require('./controllers/cronjob')
+//var job = require('./controllers/cronjob')
 var cors = require('cors')
 var app = express();
 
@@ -32,9 +31,8 @@ var corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
 }
 
-app.use(cors(corsOptions)) 
+// app.use(cors(corsOptions)) 
 
-app.use('/', index);
 app.use('/api', api);
 
 
