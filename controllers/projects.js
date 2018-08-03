@@ -274,7 +274,7 @@ exports.getProjectsSummary = function (req, res) {
                 index: "users",
                 type: "user",
                 _sourceInclude: ["fullName", "project.projectName"],
-                size:100000
+                size:1000
             }, function (error, data) {
                 if (error) {
                     var response = {}

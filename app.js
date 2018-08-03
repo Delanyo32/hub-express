@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 var api = require('./routes/api')
 var job = require('./controllers/cronjob')
-var cors = require('cors')
+//var cors = require('cors')
 var app = express();
 
 // view engine setup
