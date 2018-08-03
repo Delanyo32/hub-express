@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var api = require('./routes/api')
-//var job = require('./controllers/cronjob')
+var job = require('./controllers/cronjob')
 var cors = require('cors')
 var app = express();
 
