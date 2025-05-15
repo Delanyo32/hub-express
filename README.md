@@ -33,10 +33,6 @@ The repository is organized as follows:
 - **CSS** – Styling for frontend components
 - **ElasticSearch** - For full text search and aggregations
 
-   ```
-
-   The server should now be running at `http://localhost:3000`.
-
 ## 🐳 Docker Deployment
 
 To run the application using Docker:
