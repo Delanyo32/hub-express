@@ -1,6 +1,6 @@
 # Ashesi Hub Express
 
-**Ashesi Hub Express** is a backend service developed using **Express.js**. It serves as the core API for the **Ashesi Hub** project management platform, facilitating functionalities such as project tracking, milestone management, volunteer coordination, and user management.
+**Ashesi Hub Express** is a backend service developed using **Express.js**. It serves as the core API for the **Ashesi Hub** project management platform, facilitating functionalities such as project tracking, volunteer coordination, and user management.
 
 ## 📁 Project Structure
 
@@ -21,8 +21,6 @@ The repository is organized as follows:
 
 - **User Management**: Register and authenticate users securely.
 - **Project Tracking**: Create, update, and monitor projects and their progress.
-- **Milestone Management**: Define and track milestones within projects.
-- **Volunteer Coordination**: Manage volunteer information and assignments.
 - **Server-Side Rendering**: Utilizes Handlebars for dynamic HTML generation.
 - **API Endpoints**: Provides RESTful APIs for frontend integration.
 
@@ -33,36 +31,8 @@ The repository is organized as follows:
 - **Handlebars** – Templating engine for server-side rendering
 - **Docker** – Containerization platform
 - **CSS** – Styling for frontend components
+- **ElasticSearch** - For full text search and aggregations
 
-## 📦 Installation
-
-1. **Clone the repository**:
-
-   ```bash
-   git clone https://github.com/Delanyo32/hub-express.git
-   cd hub-express
-   ```
-
-2. **Install dependencies**:
-
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables**:
-
-   Create a `.env` file in the root directory and define necessary variables such as:
-
-   ```env
-   PORT=3000
-   DATABASE_URL=your_database_url
-   JWT_SECRET=your_jwt_secret
-   ```
-
-4. **Start the application**:
-
-   ```bash
-   npm start
    ```
 
    The server should now be running at `http://localhost:3000`.
@@ -89,5 +59,3 @@ For questions, suggestions, or collaboration inquiries, please contact:
 **Delanyo Aborchie** – [GitHub Profile](https://github.com/Delanyo32)
 
 ---
-
-*Note: This README is based on the current structure and contents of the repository. For detailed API documentation and contribution guidelines, please refer to the respective sections within the project or contact the maintainer.*
