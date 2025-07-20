@@ -18,7 +18,7 @@
         "hasha": "^3.0.0",
         "hbs": "~4.0.1",
         "mongodb-stitch": "^3.1.7",
-        "morgan": "~1.9.0",
+        "morgan": "~1.10.1",
         "node-schedule": "^1.3.0",
         "object-hash": "^1.3.0",
         "preboot": "^6.0.0-beta.3",
