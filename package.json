@@ -14,7 +14,7 @@
         "cors": "^2.8.4",
         "debug": "~2.6.9",
         "elasticsearch": "^14.1.0",
-        "express": "^4.16.3",
+        "express": "^4.21.0",
         "hasha": "^3.0.0",
         "hbs": "~4.0.1",
         "mongodb-stitch": "^3.1.7",
